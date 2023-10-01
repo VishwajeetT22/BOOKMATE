@@ -7,7 +7,7 @@ const Post = ()=>{
     return(
 
         
-<Card sx={{marginBottom:'10px'}}>
+<Card sx={{marginBottom:'10px'}} style={{ backgroundColor:'#EEF1F4' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
@@ -24,9 +24,9 @@ const Post = ()=>{
       />
       <CardMedia
         component="img"
-        height='450'
+        height='600'
         alt="Paella dish"
-        image='https://img.freepik.com/free-vector/minimalist-book-cover-template_23-2148899519.jpg'
+        image='https://edit.org/images/cat/book-covers-big-2019101610.jpg'
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
