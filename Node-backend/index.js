@@ -5,7 +5,7 @@ const userController = require('./controller/user')
 const app = express()
 const port = 5000
 
-const connectionString = 'mongodb+srv://admin:admin@cluster0.sjgcsb3.mongodb.net/?retryWrites=true&w=majority'
+const connectionString = ''//Enter link of mongodb atlas to connect
 
 mongoose.connect(connectionString)
   .then(() => {
