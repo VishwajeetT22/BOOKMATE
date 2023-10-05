@@ -1,12 +1,59 @@
 import styled from '@emotion/styled';
 import { Box, Button, TextField, Typography,Stack } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+
+import axios from "axios"
+
+// const[email,setEmail]=useState('')
+//     const[password,setPassword]=useState('')
+//     const handleSubmit=()=>
+//     {
+//         console.log(email,password)
+//         axios.post('http://localhost:5000/signup',
+//         {
+//             email:email,
+//             password:password
+//         }
+//         )
+//         .then(res=>{
+//             console.log(res.data)
+//         }).catch(err=>{
+//             console.log(err)
+//         })
+
+//     }
 
 
 const Rightbar = ()=>{
-
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('');
+        const [password, setPassword] = useState('');
+    const handleSignUp = async () => {
+        
+        try {
+          // Prepare the user data from your form
+          const userData = {
+            // firstName: 'John', // Replace with your form data
+            // lastName: 'Doe',
+            email: email,
+            // mobile: '1234567890',
+            password: password,
+          };
+    
+          // Send a POST request to the backend API
+          await axios.post('http://localhost:5000/signup', userData);
+    
+          alert('Registration Successful')
+          navigate('/signin')
+        } catch (error) {
+          console.error('Error signing up:', error);
+          alert("Registration failed")
+          // Handle the error, e.g., display an error message to the user
+        }
+      };
+    
 
     return(
         <Box  flex={4} p={2}>
@@ -37,6 +84,8 @@ const Rightbar = ()=>{
                         fullWidth
                         autoComplete="given-name"
                         variant="outlined"
+
+                       
                         
                        
                     />
@@ -75,7 +124,11 @@ const Rightbar = ()=>{
                         fullWidth
                         autoComplete="email"
                         variant="outlined"
-                      
+
+                        onChange={(e)=>{
+                            setEmail(e.target.value)
+                        }}
+                      value={email}
                       
                     />
                     </Grid>
@@ -111,7 +164,10 @@ const Rightbar = ()=>{
                         label="Password"
                         fullWidth
                         variant="outlined"
-                        
+                        onChange={(e)=>{
+                            setPassword(e.target.value)
+                        }}
+                        value={password}
                         
                     />
                     </Grid>
@@ -120,10 +176,10 @@ const Rightbar = ()=>{
                 </Grid>
 
             <Typography sx={{marginTop:'20px',marginLeft:'15px',color:'#333748'}}>
-                Already have an account? <Link href='#' style={{color:'#009357', textDecoration:'none'}}>Login</Link>
+                Already have an account? <Link href='#' style={{color:'#009357', textDecoration:'none'}} to={'/Signin'}>Login</Link>
             </Typography>
 
-            <Button variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}}>    
+            <Button onClick={handleSignUp}  variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}}>    
                 Sign up
             </Button>
 

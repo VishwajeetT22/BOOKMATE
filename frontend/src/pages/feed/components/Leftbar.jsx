@@ -1,9 +1,20 @@
 import { AccountCircle, AddCircle, Diversity2, Home, Label, Logout, Message, ModeNight } from '@mui/icons-material'
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 
 const Leftbar = ()=>{
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = localStorage.getItem('TOKEN')
+    if (!token) {
+        navigate('/signin')
+    }
+}, [])
+
 
     return(
         <Box  flex={1}  p={2} sx={{display:{xs:'none',sm:'block'}}}>
@@ -56,7 +67,9 @@ const Leftbar = ()=>{
           </ListItem>
 
           <ListItem disablePadding sx={{backgroundColor:'#EEF1F4', borderRadius:'10px',marginBottom:'20px'} }>
-            <ListItemButton component='a' href='#logout'>
+            <ListItemButton component='a' href='#logout'    onClick={() => { localStorage.clear()
+                        navigate('/signin')
+                    }}>
               <ListItemIcon>
                 <Logout/>
               </ListItemIcon>

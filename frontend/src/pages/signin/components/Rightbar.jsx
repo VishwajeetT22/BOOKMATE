@@ -1,11 +1,52 @@
 import styled from '@emotion/styled';
 import { Box, Button, TextField, Typography } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios"
 
 
 
 const Rightbar = ()=>{
+
+  const navigate = useNavigate()
+
+  const[email,setEmail]= useState('')
+  const[password,setPassword]= useState('')
+  const handleSubmit=()=>
+  {
+      console.log(email,password)
+      axios.post('http://localhost:5000/signin',
+      {
+          email:email,
+          password:password
+      }
+      )
+      .then(res=>{
+          console.log(res.data)
+          
+          if(res.data.code===500)
+          {
+              alert('user not found')
+          }
+          if(res.data.code===404)
+          {
+              alert('passowrd is wrong')
+          }
+          if(res.data.code===200)
+          {
+            alert("Login Successful")
+             //move to home
+             navigate('/feed')
+             localStorage.setItem('TOKEN',res.data.token)
+             localStorage.setItem('EMAIL',res.data.email)
+
+          }
+         
+      }).catch(err=>{
+          console.log(err)
+      })
+  }
+
 
 
     return(
@@ -25,6 +66,11 @@ const Rightbar = ()=>{
             {/* <TextField id="email" label="Email" variant="outlined" sx={{marginTop:'20px'}} /> */}
 
             <TextField
+
+              onChange={(e)=>{
+                setEmail(e.target.value)
+              }}
+              value={email}
               sx={{width:'500px'}}
               label="Email" // Label for email input
               type='email'
@@ -36,7 +82,11 @@ const Rightbar = ()=>{
             <Typography  sx={{color:'#333748', marginTop:'20px'}}>
               Enter your password
             </Typography>
-            <TextField
+            <TextField 
+              onChange={(e)=>{
+                setPassword(e.target.value)
+            }}
+            value={password}
               sx={{width:'500px'}}
               label="Password" // Label for email input
               type='password'
@@ -46,14 +96,14 @@ const Rightbar = ()=>{
             />
 
             <Typography sx={{marginTop:'15px',marginLeft:'15px',color:'#333748'}}>
-                Don't have an account yet? <Link href='#' style={{color:'#009357', textDecoration:'none'}}>Sign up here</Link>
+                Don't have an account yet? <Link to={'/Signup'}  href='#' style={{color:'#009357', textDecoration:'none'}}>Sign up here</Link>
             </Typography>
 
-            <Button variant="contained" sx={{borderRadius:0, marginY:'15px', marginLeft:'400px',paddingX:'20px'}}>    
+            <Button onClick={handleSubmit} variant="contained" sx={{borderRadius:0, marginY:'15px', marginLeft:'400px',paddingX:'20px'}}>    
                 Login
             </Button>
 
-            <Link href='#' style={{color:'#009357', textDecoration:'none',marginLeft:'350px'}}>
+            <Link href='#' style={{color:'#009357', textDecoration:'none',marginLeft:'350px' }} to={'/reset'}>
              Forgot your password?
             </Link>
 

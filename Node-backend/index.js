@@ -2,10 +2,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const userController = require('./controller/user')
+const cors = require('cors');
 const app = express()
 const port = 5000
 
 const connectionString = 'mongodb+srv://admin:admin@cluster0.sjgcsb3.mongodb.net/?retryWrites=true&w=majority'
+
+app.use(cors());
 
 mongoose.connect(connectionString)
   .then(() => {
@@ -24,6 +27,9 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 app.post('/signup', userController.signup)
+app.post('/signin',userController.signin)
+app.post('/sendotp',userController.sendotp)
+app.post('/submitotp',userController.submitotp)
 
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)

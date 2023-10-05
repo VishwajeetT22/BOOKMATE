@@ -1,12 +1,33 @@
 import styled from '@emotion/styled';
 import { Box, Button, TextField, Typography,Stack } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 
 
 const Rightbar = ()=>{
 
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('')
+
+    const handleSubmit = () => {
+        console.log(email)
+        axios.post('http://localhost:5000/sendotp',
+            {
+                email: email,
+            })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.code === 200) {
+                    navigate('/otp')
+                } else {
+                    alert('Email / Server Error.')
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+    }
 
     return(
         <Box  flex={4} p={2}>
@@ -38,7 +59,10 @@ const Rightbar = ()=>{
                         label="Email"
                         fullWidth
                         variant="outlined"
-                        
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}
                         
                     />
                     </Grid>
@@ -52,8 +76,8 @@ const Rightbar = ()=>{
                 Back to login
             </Button>
             
-            <Button variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}}>    
-                Send reset link
+            <Button variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}} onClick={handleSubmit}>    
+                Send OTP
             </Button>
             </Stack>
 

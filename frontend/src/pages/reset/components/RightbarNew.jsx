@@ -1,12 +1,36 @@
 import styled from '@emotion/styled';
 import { Box, Button, TextField, Typography,Stack } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 
 
 const RightbarNew = ()=>{
 
+    const navigate = useNavigate()
+    const [otp, setOtp] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleSubmit = () => {
+        console.log(otp, password)
+        axios.post('http://localhost:5000/submitotp',
+            {
+                otp: otp,
+                password: password,
+            })
+            .then(res => {
+                console.log(res.data)
+                if (res.data.code === 200) {
+                    navigate('/Signin')
+                    alert('Password Updated.')
+                } else {
+                    alert('server err / wrong OTP')
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+    }
 
     return(
         <Box  flex={4} p={2}>
@@ -26,9 +50,14 @@ const RightbarNew = ()=>{
                         Enter One time password
                     </Typography>
                     <TextField
+                    onChange={(e)=>{
+                        setOtp(e.target.value)
+                    }
+                    } 
+                    value={otp}
                         required
                         id="otp"
-                        type=''
+                        type='text'
                         name="otp"
                         // label="One time password  "
                         fullWidth
@@ -49,6 +78,11 @@ const RightbarNew = ()=>{
                         fullWidth
                         variant="outlined"
                         
+                        value={password}
+                        onChange={(e)=>{
+                            setPassword(e.target.value)
+                        }
+                        }
                         
                     />
                     </Grid>
@@ -62,7 +96,7 @@ const RightbarNew = ()=>{
                 Back to login
             </Button>
             
-            <Button variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}}>    
+            <Button variant="contained" sx={{borderRadius:0, marginY:'20px',paddingX:'20px'}} onClick={handleSubmit}>    
                 Submit
             </Button>
             </Stack>
