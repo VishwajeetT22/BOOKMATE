@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express()
 const port = 5000
 
-const connectionString = ''//Enter link of mongodb atlas to connect
+const connectionString = 'mongodb+srv://admin:admin@cluster0.sjgcsb3.mongodb.net/?retryWrites=true&w=majority'
 
 app.use(cors());
 

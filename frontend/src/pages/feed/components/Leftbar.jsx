@@ -1,10 +1,29 @@
 import { AccountCircle, AddCircle, Diversity2, Home, Label, Logout, Message, ModeNight } from '@mui/icons-material'
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Switch } from '@mui/material'
-import React, { useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Box, Button, DialogActions, DialogContent, DialogTitle, Divider, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Switch, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 
+import Dialog from '@mui/material/Dialog';
+import ImageUploadDialog from '../../createPost/ImageUploadDialog';
+
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Leftbar = ()=>{
+
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
 
   const navigate = useNavigate()
 
@@ -19,7 +38,7 @@ const Leftbar = ()=>{
     return(
         <Box  flex={1}  p={2} sx={{display:{xs:'none',sm:'block'}}}>
             <Box position='fixed'>
-        
+            <ImageUploadDialog open={isDialogOpen} onClose={handleCloseDialog} />
         <List>
           <ListItem disablePadding sx={{backgroundColor:'#EEF1F4', borderRadius:'10px',marginBottom:'20px'} }>
             <ListItemButton component='a' href='#home'>
@@ -49,7 +68,7 @@ const Leftbar = ()=>{
           </ListItem>
 
           <ListItem disablePadding sx={{backgroundColor:'#EEF1F4', borderRadius:'10px',marginBottom:'20px'} }>
-            <ListItemButton component='a' href='#create'>
+            <ListItemButton component='a' href='#create' onClick={handleOpenDialog}>
               <ListItemIcon>
                 <AddCircle/>
               </ListItemIcon>
@@ -85,10 +104,19 @@ const Leftbar = ()=>{
               <Switch />
             </ListItemButton>
           </ListItem>
-
+           
           </List>
           </Box>
+
+
+
+    
         </Box>
+
+
+
+
+                    
     )
 }
 

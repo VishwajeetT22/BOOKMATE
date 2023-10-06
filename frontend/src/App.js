@@ -14,6 +14,7 @@ import Profile from "./pages/profile/Profile"
 import Otp from "./pages/reset/Otp"
 
 
+
 function App() {
   return (
     <div>
@@ -25,6 +26,8 @@ function App() {
               <Route path="/Feed" element={<Feed/>}/>
               <Route path="/Profile" element={<Profile/>}/>
               <Route path="/Otp" element={<Otp/>}/>
+             
+             
           </Routes>
         </Router>
     </div>

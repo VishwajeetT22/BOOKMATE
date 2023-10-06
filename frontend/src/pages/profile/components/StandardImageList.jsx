@@ -4,7 +4,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
+import { Button, Dialog } from '@mui/material';
 
 export default function StandardImageList() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -32,7 +32,7 @@ export default function StandardImageList() {
         ))}
       </ImageList>
 
-      <Modal
+      {/* <Dialog
         open={selectedImage !== null}
         onClose={handleCloseModal}
         aria-labelledby="image-details-modal"
@@ -50,7 +50,7 @@ export default function StandardImageList() {
             Request
           </Button>
         </Box>
-      </Modal>
+      </Dialog> */}
     </div>
   );
 }
