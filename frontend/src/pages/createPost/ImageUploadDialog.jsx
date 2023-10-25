@@ -110,7 +110,7 @@ const ImageUploadDialog = ({ open, onClose }) => {
         
         </Stack>
       </DialogContent>
-    </Dialog>
+    </Dialog>     
   );
 };
 
